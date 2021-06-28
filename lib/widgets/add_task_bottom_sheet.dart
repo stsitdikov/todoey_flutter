@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey_flutter/models/task_data.dart';
 
 class AddTask extends StatelessWidget {
-  final Function addTaskCallback;
-  AddTask(this.addTaskCallback);
-
   @override
   Widget build(BuildContext context) {
-    String newTaskTitle;
+    String newTaskName;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
       child: Column(
@@ -24,7 +23,7 @@ class AddTask extends StatelessWidget {
             autofocus: true,
             textAlign: TextAlign.center,
             onChanged: (newText) {
-              newTaskTitle = newText;
+              newTaskName = newText;
             },
           ),
           SizedBox(
@@ -32,7 +31,8 @@ class AddTask extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              addTaskCallback(newTaskTitle);
+              Provider.of<TaskData>(context, listen: false)
+                  .newTask(newTaskName);
               Navigator.pop(context);
             },
             style: TextButton.styleFrom(
